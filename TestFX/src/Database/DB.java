@@ -36,17 +36,69 @@ public class DB {
        }catch(SQLException e){
            System.out.println(e.getMessage());
         return false;
+       } catch(NullPointerException ex){
+           System.out.println(ex.getMessage());
+           System.out.println("No data....");
+           return false;
        }
+    }
+
+    //emp list
+    public ResultSet empList(){
+        try{
+            String queryString = "SELECT * FROM employee";
+            ResultSet empList = this.stmt.executeQuery(queryString);
+            return  empList;
+        } catch(SQLException ex){
+            System.out.println(ex.getMessage());
+            return null;
+        } catch(NullPointerException ex){
+            System.out.println(ex.getMessage());
+            System.out.println("No data....");
+            return null;
+        }
+    }
+
+
+
+    //create employee
+    public void createEmp(String id, String fName, String lName, String initName, String contact,
+                          String hireDate, double salary, int workDays, String isActive, String empType){
+//        System.out.println("id " +id+ " name " +fName+ " " +lName+ " date " +hireDate+ " g " +gender );
+        try{
+            String addEmpQuery = "insert into employee(emp_id, emp_fname, emp_lname, emp_init," +
+                    " contact, hire_date, salary, days_work, is_active, emp_type) values('"+id+"', '"+fName+"', '"+lName+"'," +
+                    " '"+initName+"', '"+contact+"', '"+hireDate+"', '"+salary+"', '"+workDays+"','"+isActive+"'," +
+                    " '"+empType+"')";
+            System.out.println("query " +addEmpQuery);
+            this.stmt.execute(addEmpQuery);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    //Select Query
+    public ResultSet selectQuery(String queryArg){
+        ResultSet result = null;
+        try {
+
+            result = this.stmt.executeQuery(queryArg);
+            System.out.println("result " +result);
+
+        } catch (SQLException se){
+            System.out.println(se.getMessage());
+        }
+        return result;
     }
 
 //    MAIN METHOD
     public static void main(String args[]){
         DB d = new DB();
 //        boolean flag = d.login(null,null);
-        System.out.println(d+ "Status");
-
-        String list = String.valueOf(d.userList());
-        System.out.println("users " +list);
+//        System.out.println(d+ "Status");
+//
+//        String list = String.valueOf(d.userList());
+//        System.out.println("users " +list);
         ArrayList<String> empId = new ArrayList<String>();
         ArrayList<String> empContact = new ArrayList<String>();
         String curId = null;
@@ -150,16 +202,16 @@ public class DB {
     }
 
     //Select Query
-    public ResultSet selectQuery(String queryArg){
-        ResultSet result = null;
-        try {
-
-            result = this.stmt.executeQuery(queryArg);
-            System.out.println("result " +result);
-
-        } catch (SQLException se){
-            System.out.println(se.getMessage());
-        }
-        return result;
-    }
+//    public ResultSet selectQuery(String queryArg){
+//        ResultSet result = null;
+//        try {
+//
+//            result = this.stmt.executeQuery(queryArg);
+//            System.out.println("result " +result);
+//
+//        } catch (SQLException se){
+//            System.out.println(se.getMessage());
+//        }
+//        return result;
+//    }
 }

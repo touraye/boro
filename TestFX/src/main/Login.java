@@ -102,7 +102,6 @@ public class Login extends Application {
             } else {
                 boolean flag = dbCon.login(uName, uPassword);
                 if(flag){
-                    System.out.println("user exist");
                     usernameFld.clear();
                     passwordFld.clear();
 
